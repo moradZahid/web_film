@@ -26,6 +26,10 @@ class Autoloader
         if (file_exists(_MODEL_ . 'DAL/' . $class . '.php')) {
             require _MODEL_ . 'DAL/' . $class . '.php';
         }
+        if (file_exists(_MODEL_.'form/'.$class.'.php' ))
+        {
+            require(_MODEL_.'form/'.$class.'.php');
+        }
     }
 }
 
