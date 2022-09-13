@@ -1,4 +1,5 @@
 <?php
+include('controllerFunctions.php');
 
 try
 {
@@ -10,12 +11,12 @@ try
     $userDao = new UserDao();
     $userDao->modifyUser($user);
     
-    $url = './?action=manage_user';
+    $url = buildUrlUserManager('admin');
     header('Location:'.$url);  
 }
 catch(Exception $e)
 {
     $_SESSION['error'] = $e->getMessage();
-    $url = './?action=manage_user';
+    $url = buildUrlUserManager('admin');
     header('Location:'.$url);
 }

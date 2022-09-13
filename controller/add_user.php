@@ -3,12 +3,13 @@ include('controllerFunctions.php');
 
 try
 {
-    // verification de l'idUser
-    $idUser = check_idUser();
-
-    // suppression de l'utilisateur
+    // validation du formulaire et recupération des données
+    $addUserForm = new addUserForm();
+    $user = $addUserForm->getData();
+   
+    // modification de l'utilisateur
     $userDao = new UserDao();
-    $userDao->deleteUser($idUser);
+    $userDao->add($user);
     
     $url = buildUrlUserManager('admin');
     header('Location:'.$url);  

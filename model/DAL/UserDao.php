@@ -30,13 +30,34 @@ class UserDao extends Dao
     {
         echo 'ok';
     }
-
-    public function add($data)
+     
+    public function add($user)
     {
-        echo 'ok';
+        try
+        {
+            $str_prep = 'INSERT INTO user(userName, email, password) 
+                         VALUES (:userName, :email, :password)';
+            $prep = $this->_bdd->prepare($str_prep);
+            $status = $prep->execute([
+                'userName' => $user->getUserName(),
+                'email' => $user->getEmail(),
+                'password' => password_hash($user->getPassword(),PASSWORD_DEFAULT)
+            ]);
+            if (!$status)
+            {
+                throw New Exception();
+            }
+            $_SESSION['msg'] = 'Utilisateur ajouté.';
+        }
+        catch(Exception $e)
+        {
+            $url = './?action=erreur&msg=';
+            $url .= urlencode("Erreur de la base de donnee.");
+            header('Location:'.$url);
+        }
     }
 
-    public function modifyUser(User $user)
+    public function modifyUser($user)
     {
         try
         {
@@ -54,6 +75,32 @@ class UserDao extends Dao
                 throw New Exception();
             }
             $_SESSION['msg'] = 'Utilisateur modifié.';
+        }
+        catch(Exception $e)
+        {
+            $url = './?action=erreur&msg=';
+            $url .= urlencode("Erreur de la base de donnee.");
+            header('Location:'.$url);
+        }
+    }
+
+    public function modifyPassword($user)
+    {
+        try
+        {
+            $str_prep = 'UPDATE user
+                         SET password=:password
+                         WHERE idUser=:idUser';
+            $prep = $this->_bdd->prepare($str_prep);
+            $status = $prep->execute([
+                'password' => password_hash($user->getPassword(),PASSWORD_DEFAULT),
+                'idUser' => $user->getIdUser()
+            ]);
+            if (!$status)
+            {
+                throw New Exception();
+            }
+            $_SESSION['msg'] = 'Mot de passe modifié.';
         }
         catch(Exception $e)
         {

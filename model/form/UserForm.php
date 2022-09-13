@@ -48,14 +48,14 @@ class UserForm
         return $email;
     }
 
-    public function validatePassword()
+    public function validatePassword($nbr)
     {
-        if (!filter_has_var(INPUT_POST,'password'))
+        if (!filter_has_var(INPUT_POST,'password'.$nbr))
         {
             throw new Exception('Erreur dans le formulaire.');
         }
-        $password = filter_input(INPUT_POST,'password',FILTER_UNSAFE_RAW);
-        if (strlen($userName) == 0)
+        $password = filter_input(INPUT_POST,'password'.$nbr,FILTER_UNSAFE_RAW);
+        if (strlen($password) == 0)
         {
             throw new Exception('Tous les champs sont obligatoires.');
         }
