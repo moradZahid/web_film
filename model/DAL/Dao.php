@@ -1,16 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of Offres
- *
- * @author 1703728
- */
 abstract class Dao
 {
 
@@ -18,7 +7,7 @@ abstract class Dao
 
     public function __construct()
     {
-        // Connexion Database
+
         // Connexion Database
         try {
             $this->set_bdd(SPDO::getInstance());
@@ -29,18 +18,21 @@ abstract class Dao
         }
     }
 
+<<<<<<< Updated upstream
     //Récupérer toutes les items
+=======
+    //Récupérer toutes les films
+>>>>>>> Stashed changes
     abstract public function getAll();
 
-    //Récupérer plus d'info sur 1 item à l'aide de son id
-    abstract public function getOne($id);
+    //Récupérer un film
+    abstract public function getOne($idFilm);
 
-    //Ajouter un item
+    //Ajouter un film
     abstract public function add($data);
 
     public function set_bdd($_bdd)
     {
         $this->_bdd = $_bdd;
     }
-
 }
