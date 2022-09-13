@@ -71,6 +71,7 @@ class FilmsDAO extends Dao
 
     public function filmActeur($idFilm)
     {
+        $acteurList = [];
         $query = $this->_bdd->prepare('SELECT idFilm, nom, prenom, a.idActeur, peronnage, idRole 
         FROM role r 
         INNER JOIN acteurs a ON r.idActeur = a.idActeur 

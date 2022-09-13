@@ -1,21 +1,38 @@
-<form method="post">
-	<label for "titre">Titre</label>
-	<input type="text" name='titre'><br>
+<div class="container-fluid" style="background-color: gainsboro">
+	<div class="row">
 
-	<button class="ajout" type="submit">
-		Rechercher
-	</button>
+		<div class="col">
+			<h1>Rechercher un film</h1>
+			<span>Saisir un mot du titre</span>
 
-</form>
+		</div>
 
+	</div>
 
+	<div class="row"><br></div>
+	<div class="row">
+		<div class="col">
+
+			<form method="post" class="row g-2">
+				<div class="col-auto">
+					<input type="text" name='titre' class"form-control">
+				</div>
+				<div class="col-auto">
+					<button class="btn btn-secondary" type=" submit">Rechercher</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 {% if film is defined %}
-	<div class="card" style="width: 18rem;">
-		<img src="..." class="card-img-top" alt="...">
+
+	<div class="card" style="width: 18rem; margin-top: 10px">
+		<img src="{{film.get_affiche}}" class="card-img-top" alt="...">
 		<div class="card-body">
-			<h5 class="card-title">Card title</h5>
-			<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-			<a href="#" class="btn btn-primary">Go somewhere</a>
+			<h5 class="card-title">{{film.get_titre}}({{film.get_annee}})</h5>
+			{# {% for  in  %}
+			<p>{{}}</p>
+			{% endfor %} #}
 		</div>
 	</div>
 
