@@ -18,11 +18,8 @@ abstract class Dao
         }
     }
 
-<<<<<<< Updated upstream
-    //Récupérer toutes les items
-=======
     //Récupérer toutes les films
->>>>>>> Stashed changes
+
     abstract public function getAll();
 
     //Récupérer un film
