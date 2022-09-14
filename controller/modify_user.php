@@ -1,7 +1,7 @@
 <?php
 include('controllerFunctions.php');
 
-//check_authorisation(check_idUser());
+check_authorisation();
 
 try
 {

@@ -1,6 +1,8 @@
 <?php
 include('controllerFunctions.php');
 
+check_authorisation();
+
 try
 {
     // verification de l'idUser

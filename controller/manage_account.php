@@ -1,6 +1,8 @@
 <?php
 include('controllerFunctions.php');
 
+check_authorisation('user');
+
 $userDao = new UserDao();
 $user = $userDao->getOne($_SESSION['idUser']);
 

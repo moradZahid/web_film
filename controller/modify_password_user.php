@@ -1,6 +1,8 @@
 <?php
 include('controllerFunctions.php');
 
+check_authorisation();
+
 try
 {
     if (filter_has_var(INPUT_POST,'submitted'))
@@ -23,13 +25,14 @@ try
         $_SESSION['id_modification_password'] = $idUser;
 
         // gestion de l'annulation
-        check_cancel_modification_password();
+        $urlCancel = buildUrlUserManager();
         
         // affichage du formulaire
         $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
         echo $twig->render('modify_password_user.html.twig',[
             'error' => $error,
-            'idUser' => $idUser
+            'idUser' => $idUser,
+            'cancel' => $urlCancel
         ]);
         unset($_SESSION['error']);
     }

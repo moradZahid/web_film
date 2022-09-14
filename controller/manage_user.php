@@ -1,7 +1,7 @@
 <?php
 include('controllerFunctions.php');
 
-check_authorisation_admin_page();
+check_authorisation('admin_page');
 
 $userDao = new UserDao();
 $users = $userDao->getAll();

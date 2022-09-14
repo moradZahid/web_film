@@ -38,7 +38,7 @@ function buildUrlUserManager($option=null)
     {
         if ($option == 'delete')
         {
-            if ($_SESSION['isAdmin'])
+            if (isset($_SESSION['isAdmin']))
             {
                 $url = './?action=manage_user';    
             }
@@ -54,7 +54,7 @@ function buildUrlUserManager($option=null)
     }
     else 
     {
-        if ($_SESSION['isAdmin'] )
+        if (isset($_SESSION['isAdmin']))
         {
             $url = './?action=manage_user';
         }
@@ -64,16 +64,6 @@ function buildUrlUserManager($option=null)
         }
     }
     return $url;
-}
-
-function check_cancel_modification_password()
-{
-    if (filter_has_var(INPUT_GET,'cancel'))
-    {
-        $url = buildUrlUserManager('admin');
-        header('Location:'.$url);
-        return;
-    }   
 }
 
 function check_authentification($user)
@@ -103,43 +93,31 @@ function check_admin($idUser)
     }
 }
 
-function check_authorisation($idUser=null)
+function check_authorisation($option='')
 {
     try 
     {
-        if ($_SESSION['isAdmin'])
+        if (isset($_SESSION['isAdmin']))
         {
             return true;
         }
-        if (!isset($_SESSION['email']))
-        {
-            throw new Exception('Accèss non authorisé.');
-        }
-        if (isset($idUser))
-        {
-            if ($idUser != $_SESSION['idUser'])
-            {
-                throw new Exception('Accès non authorisé.');
-            }
-        }
-        return true;
-    }
-    catch(Exception $e)
-    {
-        $url = './?action=erreur&msg=';
-        $url .= urlencode($e->getMessage());
-        header('Location:'.$url);
-    }
-}
-
-function check_authorisation_admin_page()
-{
-    try
-    {
-        if (!$_SESSION['isAdmin'])
+        if ($option == 'admin_page')
         {
             throw new Exception('Accès non authorisé.');
         }
+        if (!isset($_SESSION['email']))
+        {
+            throw new Exception('Accès non authorisé.');   
+        }
+        if (strlen($option) === 0)
+        {
+            $id = check_idUser();
+            if ($_SESSION['idUser'] != $id)
+            {
+                throw new Exception('Accès non authorisé.');   
+            }
+        }
+        return true;
     }
     catch(Exception $e)
     {

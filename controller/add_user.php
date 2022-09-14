@@ -1,6 +1,8 @@
 <?php
 include('controllerFunctions.php');
 
+check_authorisation('admin_page');
+
 try
 {
     // validation du formulaire et recupération des données
