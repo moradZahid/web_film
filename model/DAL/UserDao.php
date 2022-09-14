@@ -14,6 +14,12 @@ class UserDao extends Dao
             {
                 throw New Exception();
             }
+            $users = [];
+            foreach($data as $row)
+            {
+                $users[] = new User($row['idUser'],$row['userName'],$row['email'],null);
+            }
+            return $users;
         }
         catch(Exception $e)
         {
@@ -21,14 +27,33 @@ class UserDao extends Dao
             $url .= urlencode("Erreur de la base de donnee.");
             header('Location:'.$url);
         }
-        
-
-        return $data;
     }
 
-    public function getOne($id)
+    public function getOne($idUser)
     {
-        echo 'ok';
+        try
+        {
+            $str_prep = 'SELECT *
+                         FROM user
+                         WHERE idUser=:idUser';
+            $prep = $this->_bdd->prepare($str_prep);
+            $status = $prep->execute([
+                'idUser' => $idUser
+            ]);
+            if (!$status)
+            {
+                throw New Exception();
+            }
+            $data = $prep->fetch();
+            $user = new User($data['idUser'],$data['userName'],$data['email'],null);
+            return $user;
+        }
+        catch(Exception $e)
+        {
+            $url = './?action=erreur&msg=';
+            $url .= urlencode("Erreur de la base de donnee.");
+            header('Location:'.$url);
+        }
     }
      
     public function add($user)
@@ -125,6 +150,31 @@ class UserDao extends Dao
                 throw New Exception();
             }
             $_SESSION['msg'] = 'Utilisateur supprimé.';
+        }
+        catch(Exception $e)
+        {
+            $url = './?action=erreur&msg=';
+            $url .= urlencode("Erreur de la base de donnee.");
+            header('Location:'.$url);
+        }
+    }
+
+    public function getPasswordHash($email)
+    {
+        try
+        {
+            $str_prep = 'SELECT password, idUser
+                         FROM user
+                         WHERE email=:email';
+            $prep = $this->_bdd->prepare($str_prep);
+            $status = $prep->execute([
+                'email' => $email
+            ]);
+            if (!$status)
+            {
+                throw New Exception();
+            }
+            return $prep->fetch();
         }
         catch(Exception $e)
         {

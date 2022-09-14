@@ -48,7 +48,7 @@ class UserForm
         return $email;
     }
 
-    public function validatePassword($nbr)
+    public function validatePassword($nbr='')
     {
         if (!filter_has_var(INPUT_POST,'password'.$nbr))
         {

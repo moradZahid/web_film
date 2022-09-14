@@ -35,3 +35,30 @@ function check_cancel_modification_password()
         return;
     }   
 }
+
+function check_authentification($user)
+{
+    $userDao = new UserDao();
+    $pswd = $userDao->getPasswordHash($user->getEmail());
+    if (count($pswd) == 0)
+    {
+        throw new Exception('Email et mot de passe incorrectes.');
+    }
+    if (!password_verify($user->getPassword(),$pswd['password']))
+    {
+        throw new Exception('Email ou mot de passe incorrectes.');
+    }
+    $_SESSION['email'] = $user->getEmail();
+    $_SESSION['idUser'] = $pswd['idUser'];
+    check_admin($_SESSION['idUser']);
+}
+
+function check_admin($idUser)
+{
+    $userDao = new UserDao();
+    $user = $userDao->getOne($idUser);
+    if ($user->getUserName() == 'admin')
+    {
+        $_SESSION['isAdmin'] = true;
+    }
+}
