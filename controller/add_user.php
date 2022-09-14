@@ -11,12 +11,12 @@ try
     $userDao = new UserDao();
     $userDao->add($user);
     
-    $url = buildUrlUserManager('admin');
+    $url = buildUrlUserManager();
     header('Location:'.$url);  
 }
 catch(Exception $e)
 {
     $_SESSION['error'] = $e->getMessage();
-    $url = buildUrlUserManager('admin');
+    $url = buildUrlUserManager();
     header('Location:'.$url);
 }

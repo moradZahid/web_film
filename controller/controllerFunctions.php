@@ -2,28 +2,47 @@
 
 function check_idUser()
 {
-    if (!filter_has_var(INPUT_GET,'id'))
+    try
     {
-        throw new Exception('Erreur dans le formulaire.');
+        if (filter_has_var(INPUT_POST,'idUser'))
+        {    
+            $idUser = filter_input(INPUT_POST,'idUser',FILTER_VALIDATE_INT);
+            if (!$idUser)
+            {
+                throw new Exception('Erreur dans le formulaire.');
+            }
+            return $idUser;
+        }
+        if (!filter_has_var(INPUT_GET,'id'))
+        {
+            throw new Exception('Erreur dans le formulaire.');
+        }
+        $idUser = filter_input(INPUT_GET,'id',FILTER_VALIDATE_INT);
+        if (!$idUser)
+        {
+            throw new Exception('Erreur dans le formulaire.');
+        }
+        return $idUser;
     }
-    $idUser = filter_input(INPUT_GET,'id',FILTER_VALIDATE_INT);
-    if (!$idUser)
+    catch(Exception $e)
     {
-        throw new Exception('Erreur dans le formulaire.');
-    }
-    return $idUser;
+        $url = './?action=erreur&msg=';
+        $url .= urlencode($e->getMessage());
+        header('Location:'.$url);
+    }   
 }    
 
-function buildUrlUserManager($user,$id=null)
+function buildUrlUserManager($id=null)
 {
-    if ($user == 'admin')
+    if (isset($id)) 
     {
-        if (isset($id)) 
-        {
-            return './?action=modify_password_user&id='.$id;
-        }
+        return './?action=modify_password_user&id='.$id;
+    }
+    if ($_SESSION['isAdmin'] )
+    {
         return './?action=manage_user';
     }
+    return './?action=manage_account';
 }
 
 function check_cancel_modification_password()
@@ -60,5 +79,51 @@ function check_admin($idUser)
     if ($user->getUserName() == 'admin')
     {
         $_SESSION['isAdmin'] = true;
+    }
+}
+
+function check_authorisation($idUser=null)
+{
+    try 
+    {
+        if ($_SESSION['isAdmin'])
+        {
+            return true;
+        }
+        if (!isset($_SESSION['email']))
+        {
+            throw new Exception('Accèss non authorisé.');
+        }
+        if (isset($idUser))
+        {
+            if ($idUser != $_SESSION['idUser'])
+            {
+                throw new Exception('Accès non authorisé.');
+            }
+        }
+        return true;
+    }
+    catch(Exception $e)
+    {
+        $url = './?action=erreur&msg=';
+        $url .= urlencode($e->getMessage());
+        header('Location:'.$url);
+    }
+}
+
+function check_authorisation_admin_page()
+{
+    try
+    {
+        if (!$_SESSION['isAdmin'])
+        {
+            throw new Exception('Accès admin non authorisé.');
+        }
+    }
+    catch(Exception $e)
+    {
+        $url = './?action=erreur&msg=';
+        $url .= urlencode($e->getMessage());
+        header('Location:'.$url);
     }
 }

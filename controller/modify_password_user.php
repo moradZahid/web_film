@@ -13,7 +13,7 @@ try
         $userDao = new UserDao();
         $userDao->modifyPassword($user);
         
-        $url = buildUrlUserManager('admin');
+        $url = buildUrlUserManager();
         header('Location:'.$url);
     }
     else
@@ -31,12 +31,11 @@ try
             'error' => $error,
             'idUser' => $idUser
         ]);
-
     }
 }
 catch(Exception $e)
 {
     $_SESSION['error'] = $e->getMessage();    
-    $url = buildUrlUserManager('admin',$_SESSION['id_modification_password']);
+    $url = buildUrlUserManager($_SESSION['id_modification_password']);
     header('Location:'.$url);
 }

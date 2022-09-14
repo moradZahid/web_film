@@ -13,7 +13,10 @@ class AddUserForm extends UserForm
         {
             throw new Exception('Mot de passe invalide.');
         }
-        
+        if ($userName == 'admin')
+        {
+            throw new Exception('Action non authorisée.');
+        }
         return new User(null,$userName,$email,$password1);
     }
 }
