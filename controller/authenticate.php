@@ -18,10 +18,13 @@ try
     else
     {
         // affichage du formulaire
+        $msg = isset($_SESSION['msg']) ? $_SESSION['msg'] : ''; 
         $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
         echo $twig->render('authenticate.html.twig',[
+            'msg' => $msg,
             'error' => $error
         ]);
+        unset($_SESSION['msg']);
         unset($_SESSION['error']);
     }
 }

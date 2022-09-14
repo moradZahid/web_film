@@ -10,12 +10,12 @@ try
     $userDao = new UserDao();
     $userDao->deleteUser($idUser);
     
-    $url = buildUrlUserManager('admin');
+    $url = buildUrlUserManager('delete');
     header('Location:'.$url);  
 }
 catch(Exception $e)
 {
     $_SESSION['error'] = $e->getMessage();
-    $url = buildUrlUserManager('admin');
+    $url = buildUrlUserManager();
     header('Location:'.$url);
 }

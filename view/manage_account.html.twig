@@ -1,0 +1,23 @@
+<div>
+	<h1 class="mx-3">Gestion des utilisateurs</h1>
+	<div class="container my-5">
+		<div class="row text-success">{{msg}}</div>
+		<div class="row text-danger">{{error}}</div>
+		<div class="row">
+			<div class="col-2">Nom d'utilisateur</div>
+			<div class="col-2">Email</div>
+		</div>
+		<form method="post" action="./?action=modify_user" class="row my-1">
+			<input type="text" name="userName" value="{{ user.getUserName }}" class="col-2">
+			<input type="text" name="email" value="{{user.getEmail}}" class="col-2">
+			<input type="hidden" name="idUser" value="{{user.getIdUser}}">
+			<input type="submit" value="Modifier" class="btn btn-primary col-1">
+			<button class="btn btn-danger col-1">
+				<a href="./?action=delete_user&id={{user.getIdUser}}">Supprimer</a>
+			</button>
+			<button class="btn btn-outline-primary col-2">
+				<a href="./?action=modify_password_user&id={{user.getIdUser}}">Modifier mot de passe</a>
+			</button>
+		</form>
+	</div>
+</div>
