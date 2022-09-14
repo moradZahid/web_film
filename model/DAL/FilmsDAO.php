@@ -60,9 +60,9 @@ class FilmsDAO extends Dao
 
     public function searchFilm($titre)
     {
-
-        $query = $this->_bdd->prepare('SELECT * FROM films WHERE films.titre = :titre');
-        $query->execute(array('titre' => $titre));
+        $titre = strtolower($titre);
+        $query = $this->_bdd->prepare('SELECT * FROM films WHERE LOWER(titre) LIKE :titre');
+        $query->execute(array('titre' => '%' . $titre . '%'));
         while ($data = $query->fetch()) {
             $movies[] = new Films($data['idFilm'], $data['titre'], $data['realisateur'], $data['affiche'], $data['annee']);
         }
@@ -78,7 +78,7 @@ class FilmsDAO extends Dao
         WHERE idFilm = :idFilm');
         $query->execute(array(':idFilm' => $idFilm));
         while ($data = $query->fetch()) {
-            $acteurList[] = new Role($data['idFilm'], $data['idRole'], $data['nom'], $data['prenom'], $data['personnage'], $data['idActeur']);
+            $acteurList[] = new Role($data['personnage'], $data['idRole'], $data['idFilm'], $data['nom'], $data['prenom'], $data['idActeur']);
         }
         return $acteurList;
     }
