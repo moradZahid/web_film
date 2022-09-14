@@ -1,19 +1,21 @@
-<<<<<<< Updated upstream
-body{
-   color : black; 
+body {
+   color: black;
    background-color: white;
    font-family: 'Ubuntu', sans-serif;
 }
 
-header, footer{
-   color : black; 
+header,
+footer {
+   color: black;
    background-color: white;
 }
 
-a, a:visited {
+a,
+a:visited {
    text-decoration: none;
    color: black;
-=======
+}
+
 body {
    color: black;
    /* background-color: black; */
@@ -24,5 +26,12 @@ header,
 footer {
    color: rgb(102, 102, 114);
    /* background-color: white; */
->>>>>>> Stashed changes
+}
+
+span.carousel-control-prev-icon {
+   background-color: black;
+}
+
+span.carousel-control-next-icon {
+   background-color: black;
 }

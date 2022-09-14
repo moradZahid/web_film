@@ -18,22 +18,74 @@
 					<input type="text" name='titre' class"form-control">
 				</div>
 				<div class="col-auto">
-					<button class="btn btn-secondary" type=" submit">Rechercher</button>
+					<button class="btn btn-primary" type=" submit" style="margin-bottom : 5px;">Rechercher</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
-{% if film is defined %}
 
-	<div class="card" style="width: 18rem; margin-top: 10px">
-		<img src="{{film.get_affiche}}" class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">{{film.get_titre}}({{film.get_annee}})</h5>
-			{# {% for  in  %}
-			<p>{{}}</p>
-			{% endfor %} #}
+<div class="container-fluid" style="">
+	{% if film is defined %}
+		<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active" style="background-color: white-smoke">
+					<div class="card" style="width: 500px; margin-left: 250px; margin-top:15px">
+						<div class="container">
+							<div class="row">
+								<div class="col-6">
+									<h4 class="card-title">{{film.get_titre}}({{film.get_annee}})</h4>
+									<img src="{{film.get_affiche}}" class="card-img-top" alt="...">
+								</div>
+
+								<div class="col-6">
+									<div class="card-body">
+										<br><h6>Acteurs:</h6><br>
+										{% for role in film.get_tabRoles %}
+											<h6>{{role.get_nom}}
+												{{role.get_prenom}}
+												({{role.get_personnage}})</h6>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% for movie in films %}
+					<div class="carousel-item">
+						<div class="card" style="width: 600px; margin-left: 250px; margin-top:15px;">
+							<div class="container">
+								<div class="row">
+									<div class="col-6">
+										<h4 class="card-title">{{movie.get_titre}}({{movie.get_annee}})</h4>
+										<img src="{{movie.get_affiche}}" class="card-img-top" alt="...">
+									</div>
+
+									<div class="col-6">
+										<div class="card-body">
+											<br><h6>Acteurs:</h6><br>
+											{% for role in movie.get_tabRoles %}
+												<h6>{{role.get_nom}}
+													{{role.get_prenom}}
+													({{role.get_personnage}})</h6>
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
 		</div>
-	</div>
-
-{% endif %}
+	{% endif %}
+</div>
