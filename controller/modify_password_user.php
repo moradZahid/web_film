@@ -31,6 +31,7 @@ try
             'error' => $error,
             'idUser' => $idUser
         ]);
+        unset($_SESSION['error']);
     }
 }
 catch(Exception $e)

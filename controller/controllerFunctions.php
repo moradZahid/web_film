@@ -32,17 +32,38 @@ function check_idUser()
     }   
 }    
 
-function buildUrlUserManager($id=null)
+function buildUrlUserManager($option=null)
 {
-    if (isset($id)) 
+    if (isset($option)) 
     {
-        return './?action=modify_password_user&id='.$id;
+        if ($option == 'delete')
+        {
+            if ($_SESSION['isAdmin'])
+            {
+                $url = './?action=manage_user';    
+            }
+            else
+            {
+                $url = './?action=sign_out';
+            }
+        }
+        else 
+        {
+            $url = './?action=modify_password_user&id='.$option;
+        } 
     }
-    if ($_SESSION['isAdmin'] )
+    else 
     {
-        return './?action=manage_user';
+        if ($_SESSION['isAdmin'] )
+        {
+            $url = './?action=manage_user';
+        }
+        else 
+        {
+            $url = './?action=manage_account';
+        }
     }
-    return './?action=manage_account';
+    return $url;
 }
 
 function check_cancel_modification_password()
@@ -59,7 +80,7 @@ function check_authentification($user)
 {
     $userDao = new UserDao();
     $pswd = $userDao->getPasswordHash($user->getEmail());
-    if (count($pswd) == 0)
+    if (!$pswd)
     {
         throw new Exception('Email et mot de passe incorrectes.');
     }
@@ -117,7 +138,7 @@ function check_authorisation_admin_page()
     {
         if (!$_SESSION['isAdmin'])
         {
-            throw new Exception('Accès admin non authorisé.');
+            throw new Exception('Accès non authorisé.');
         }
     }
     catch(Exception $e)

@@ -10,7 +10,7 @@ try
     $userDao = new UserDao();
     $userDao->deleteUser($idUser);
     
-    $url = buildUrlUserManager();
+    $url = buildUrlUserManager('delete');
     header('Location:'.$url);  
 }
 catch(Exception $e)

@@ -24,6 +24,7 @@ try
             'msg' => $msg,
             'error' => $error
         ]);
+        unset($_SESSION['msg']);
         unset($_SESSION['error']);
     }
 }

@@ -6,7 +6,7 @@ try
     if (filter_has_var(INPUT_POST,'submitted'))
     {
         // validation du formulaire et recupération des données
-        $addUserForm = new addUserForm();
+        $addUserForm = new AddUserForm();
         $user = $addUserForm->getData();
 
         // modification de l'utilisateur
@@ -23,6 +23,7 @@ try
          echo $twig->render('sign_up.html.twig',[
              'error' => $error
          ]);
+         unset($_SESSION['error']);
     }
 }
 catch(Exception $e)
