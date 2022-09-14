@@ -13,7 +13,6 @@ if (isset($_POST['titre'])) {
         $acteurList = $filmsDao->filmActeur($film->get_idFilm());
         $film->set_tabRoles($acteurList);
     }
-
     echo $twig->render('recherche_film.html.twig', ['film' => $films[0]]);
 } else {
     echo $twig->render('recherche_film.html.twig');
