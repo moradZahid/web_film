@@ -126,3 +126,11 @@ function check_authorisation($option='')
         header('Location:'.$url);
     }
 }
+
+function make_keywords_title()
+{
+    $titre = filter_input(INPUT_POST,'titre',FILTER_SANITIZE_SPECIAL_CHARS);
+    $titre = strtolower($titre);
+    $titre = trim($titre);
+    return preg_split('/\s+/',$titre);
+}
