@@ -1,4 +1,5 @@
 <?php
+setcookie('email');
 unset($_SESSION['email']);
 unset($_SESSION['idUser']);
 unset($_SESSION['isAdmin']);

@@ -30,6 +30,7 @@ try
 }
 catch(Exception $e)
 {
+    setcookie('email');
     $_SESSION['error'] = $e->getMessage();    
     $url = './?action=authenticate';
     header('Location:'.$url);

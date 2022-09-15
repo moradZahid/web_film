@@ -134,3 +134,26 @@ function make_keywords_title()
     $titre = trim($titre);
     return preg_split('/\s+/',$titre);
 }
+
+function authenticate_automatically()
+{
+    if (isset($_SESSION['email']))
+    {
+        return true;
+    }
+    if (!isset($_COOKIE['email']))
+    {
+        return true;
+    }
+    $userDao = new UserDao();
+    $email = $_COOKIE['email'];
+    $data = $userDao->getPasswordHash($email);
+    if (!$data)
+    {
+        return true;
+    }
+    $_SESSION['email'] = $email;
+    $_SESSION['idUser'] = $data['idUser'];
+    check_admin($_SESSION['idUser']);
+    header('Location:./');
+}

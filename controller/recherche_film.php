@@ -1,6 +1,8 @@
 <?php
 include('controllerFunctions.php');
 
+authenticate_automatically();
+
 try
 {
     //gere connection et les function 
