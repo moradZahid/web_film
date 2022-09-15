@@ -13,9 +13,11 @@ $status = $filmsDao->deleteOne($idFilm);
 
 //Si $statut est executé alors affiche dans delete_offre.twig l'id avec msg "supprimé"
 if ($status) {
-    echo $twig->render('supprimer_film.html.twig', ['status' => "Le film $idFilm à été supprimé ", 'film' => $idFilm]);
+    $msg = "Le film à été supprimé ";
 }
 //Sinon alors affiche dans delete_offre.twig l'id avec msg "Erreur"
 else {
-    echo $twig->render('supprimer_film.html.twig', ['status' => "Erreur suppression"]);
+    $msg = "Erreur de suppression";
 }
+
+echo $twig->render('gestion_film.html.twig', ['status' => $msg]);

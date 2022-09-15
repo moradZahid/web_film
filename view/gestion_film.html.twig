@@ -1,43 +1,66 @@
-{% if status is not defined %}
+<p>{{status}}</p>
+<div class="container-fluid" style="background-color: gainsboro; margin-bottom: 20px">
 
-	<form action="creer_film" method="post" class="w-25">
-		<div class="mb-3">
-			<label for="exampleInputEmail1" class="form-label">Titre film</label>
-			<input type="text" class="form-control" id="exampleInputEmail1" name="titre">
+	<div class="row">
+
+		<form action="gestion_film" method="post" class="w-50">
+			<h4>Ajouter</h4>
+			<div class="mb-3">
+				<label for="exampleInputEmail1" class="form-label">Titre film</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" name="titre">
+			</div>
+			<div class="mb-3">
+				<label for="exampleInputPassword1" class="form-label">Nom Realisateur</label>
+				<input type="text" class="form-control" id="exampleInputPassword1" name="realisateur">
+			</div>
+			<div class="mb-3">
+				<label for="exampleInputPassword1" class="form-label">Affiche</label>
+				<input type="text" class="form-control" id="exampleInputPassword1" name="affiche">
+			</div>
+			<div class="mb-3">
+				<label for="exampleInputPassword1" class="form-label">Annee</label>
+				<input type="text" class="form-control" id="exampleInputPassword1" name="annee">
+			</div>
+			<input type="hidden" name="type" value="add">
+			<button type="submit" class="btn btn-primary">Ajouter</button>
+		</form>
+
+	</div>
+
+
+	<h4 style="margin-top:40px">Modifier/Supprimer</h4>
+
+	{% for film in allFilms %}
+
+
+		<form method="post">
+			<div class="row ">
+
+				<input name="titre" class="col-2" value="{{film.get_titre}}">
+
+				<input name="realisateur" class="col-2" value="{{film.get_realisateur}}">
+
+				<input name="affiche" class="col-2" value="{{film.get_affiche}}">
+
+				<input name="annee" class="col-1" value="{{film.get_annee}}">
+
+				<input name="idFilm" type="hidden" value="{{film.get_idFilm}}">
+
+
+				<input type="hidden" name="type" value="modify">
+				<button type="submit" class="col-1 mx-3">Modifier</button>
+			</form>
+
+			<form method="post" class="col-1">
+				<input type="hidden" name="type" value="delete">
+				<input name="idFilm" type="hidden" value="{{film.get_idFilm}}">
+				<button type="submit">Supprimer</button>
+			</form>
+
 		</div>
-		<div class="mb-3">
-			<label for="exampleInputPassword1" class="form-label">Nom Realisateur</label>
-			<input type="text" class="form-control" id="exampleInputPassword1" name="realisateur">
-		</div>
-		<div class="mb-3">
-			<label for="exampleInputPassword1" class="form-label">Affiche</label>
-			<input type="text" class="form-control" id="exampleInputPassword1" name="affiche">
-		</div>
-		<div class="mb-3">
-			<label for="exampleInputPassword1" class="form-label">Annee</label>
-			<input type="text" class="form-control" id="exampleInputPassword1" name="annee">
-		</div>
-		<button type="submit" class="btn btn-primary">Ajouter</button>
-	</form>
+	{% endfor %}
 
-{% else %}
-
-	<p>{{status}}:</p>
-
-	{% if film is defined %}
-		{{film.get_titre}}:
-		{{film.get_realisateur}}
-		{{film.get_affiche}}
-		{{film.get_annee}}
-	{% endif %}
-
-	{% if acteur is defined %}
-		{{acteur.get_nom}}:
-		{{acteur.get_prenom}}
-	{% endif %}
-
-{% endif %}
-
-<br><button style="margin-top:20px">
+</div>
+<button style="margin-top:20px">
 	<a href="recherche_film" style="text-decoration: none; color: black;">Revenir à la page recherche</a>
-</button></div>
+</button>
