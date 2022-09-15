@@ -58,11 +58,11 @@ class FilmsDAO extends Dao
 
     //Recherche film
 
-    public function searchFilm($titre)
+    public function searchFilm($keywords)
     {
-        $titre = strtolower($titre);
-        $query = $this->_bdd->prepare('SELECT * FROM films WHERE LOWER(titre) LIKE :titre');
-        $query->execute(array('titre' => '%' . $titre . '%'));
+        $regExp = $this->makeRegExpTitle($keywords);
+        $query = $this->_bdd->prepare('SELECT * FROM films WHERE LOWER(titre) REGEXP :regexp');
+        $query->execute(array('regexp' => $regExp));
         while ($data = $query->fetch()) {
             $movies[] = new Films($data['idFilm'], $data['titre'], $data['realisateur'], $data['affiche'], $data['annee']);
         }
@@ -81,5 +81,12 @@ class FilmsDAO extends Dao
             $acteurList[] = new Role($data['personnage'], $data['idRole'], $data['idFilm'], $data['nom'], $data['prenom'], $data['idActeur']);
         }
         return $acteurList;
+    }
+    
+    public function makeRegExpTitle($keywords)
+    {
+        $regExp = implode('|',$keywords);
+        $regExp = "($regExp)";
+        return $regExp;
     }
 }
