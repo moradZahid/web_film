@@ -54,4 +54,19 @@ class ActeursDAO extends Dao
         $query->execute(array(':idActeur' => $idActeur));
         return ($query->rowCount());
     }
+
+    //Modifier un acteur
+    public function modifyActeur($acteur)
+    {
+        $query = $this->_bdd->prepare('UPDATE acteurs 
+        SET nom=:nom, prenom=:prenom
+        WHERE idActeur = :idActeur');
+        $query->execute(array(
+            'idActeur' => $acteur->get_idActeur(),
+            'nom' => $acteur->get_nom(),
+            'prenom' => $acteur->get_prenom(),
+        ));
+
+        return ($query->rowCount());
+    }
 }

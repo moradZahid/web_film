@@ -1,0 +1,54 @@
+<p>{{status}}</p>
+<div class="container-fluid" style="background-color: gainsboro; margin-bottom: 20px">
+
+	<div class="row">
+
+		<form action="gestion_acteur" method="post" class="w-50">
+			<h4>Ajouter</h4>
+			<div class="mb-3">
+				<label for="exampleInputEmail1" class="form-label">Nom de l'acteur</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" name="nom">
+			</div>
+			<div class="mb-3">
+				<label for="exampleInputPassword1" class="form-label">Prenom de l'acteur</label>
+				<input type="text" class="form-control" id="exampleInputPassword1" name="prenom">
+			</div>
+			<input type="hidden" name="type" value="add">
+			<button type="submit" class="btn btn-primary">Ajouter</button>
+		</form>
+
+	</div>
+
+
+	<h4 style="margin-top:40px">Modifier/Supprimer</h4>
+
+	{% for acteur in allActeurs %}
+
+
+		<form method="post">
+			<div class="row ">
+
+				<input name="nom" class="col-2" value="{{acteur.get_nom}}">
+
+				<input name="prenom" class="col-2" value="{{acteur.get_prenom}}">
+
+				<input name="idActeur" type="hidden" value="{{acteur.get_idActeur}}">
+
+
+				<input type="hidden" name="type" value="modify">
+				<button type="submit" class="col-1 mx-3">Modifier</button>
+			</form>
+
+			<form method="post" class="col-1">
+				<input type="hidden" name="type" value="delete">
+				<input name="idActeur" type="hidden" value="{{acteur.get_idActeur}}">
+				<button type="submit">Supprimer</button>
+			</form>
+
+		</div>
+	{% endfor %}
+
+</div>
+<button style="margin-top:20px">
+	<a href="recherche_film" style="text-decoration: none; color: black;">Revenir à la page recherche</a>
+</button>
