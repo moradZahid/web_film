@@ -17,7 +17,7 @@
 								<a class="dropdown-item" href="gestion_film">Films</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="#">Acteurs</a>
+								<a class="dropdown-item" href="gestion_acteur">Acteurs</a>
 							</li>
 							<li>
 								<a class="dropdown-item" href="#">Roles</a>
@@ -28,48 +28,3 @@
 			</div>
 		</div>
 	</nav>
-	{# {% if status is not defined %}
-						
-								<form action="creer_film" method="post" class="w-25">
-									<div class="mb-3">
-										<label for="exampleInputEmail1" class="form-label">Titre film</label>
-										<input type="text" class="form-control" id="exampleInputEmail1" name="titre">
-									</div>
-									<div class="mb-3">
-										<label for="exampleInputPassword1" class="form-label">Nom Realisateur</label>
-										<input type="text" class="form-control" id="exampleInputPassword1" name="realisateur">
-									</div>
-									<div class="mb-3">
-										<label for="exampleInputPassword1" class="form-label">Affiche</label>
-										<input type="text" class="form-control" id="exampleInputPassword1" name="affiche">
-									</div>
-									<div class="mb-3">
-										<label for="exampleInputPassword1" class="form-label">Annee</label>
-										<input type="text" class="form-control" id="exampleInputPassword1" name="annee">
-									</div>
-									<button type="submit" class="btn btn-primary">Submit</button>
-								</form>
-						
-							{% else %}
-						
-								<p>{{status}}:</p>
-						
-								{% if film is defined %}
-									{{film.get_titre}}:
-									{{film.get_realisateur}}
-									{{film.get_affiche}}
-									{{film.get_annee}}
-								{% endif %}
-						
-								{% if acteur is defined %}
-									{{acteur.get_nom}}:
-									{{acteur.get_prenom}}
-								{% endif %}
-						
-							{% endif %}
-						
-							<br><button style="margin-top:20px">
-								<a href="creation_element" style="text-decoration: none; color: black;">Revenir au menu creation</a>
-							</button>
-						
-						</div> #}

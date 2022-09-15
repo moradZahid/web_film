@@ -82,11 +82,27 @@ class FilmsDAO extends Dao
         }
         return $acteurList;
     }
-    
+
     public function makeRegExpTitle($keywords)
     {
-        $regExp = implode('|',$keywords);
+        $regExp = implode('|', $keywords);
         $regExp = "($regExp)";
         return $regExp;
+    }
+
+    public function modifyFilm($film)
+    {
+        $query = $this->_bdd->prepare('UPDATE films 
+        SET titre=:titre, realisateur=:realisateur, affiche=:affiche, annee=:annee 
+        WHERE idFilm = :idFilm');
+        $query->execute(array(
+            'idFilm' => $film->get_idFilm(),
+            'titre' => $film->get_titre(),
+            'realisateur' => $film->get_realisateur(),
+            'affiche' => $film->get_affiche(),
+            'annee' => $film->get_annee()
+        ));
+
+        return ($query->rowCount());
     }
 }
