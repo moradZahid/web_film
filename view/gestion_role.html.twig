@@ -1,0 +1,89 @@
+<p>{{status}}</p>
+<div class="container-fluid" style="background-color: gainsboro; margin-bottom: 20px">
+
+	<div class="row">
+
+		<form action="gestion_role" method="post" class="w-50">
+			<h4>Ajouter</h4>
+			<div class="mb-3">
+				<label class="form-label">Personnage</label>
+				<input type="text" class="form-control" name="personnage">
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Film</label>
+				<select name="idFilm">
+					{% for film in allFilms %}
+						<option value="{{film.get_idFilm}}">{{film.get_titre}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Acteur</label>
+				<select name="idActeur">
+					{% for acteur in allActeurs %}
+						<option value="{{acteur.get_idActeur}}">{{acteur.get_nom}}
+							{{acteur.get_prenom}}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<input type="hidden" name="type" value="add">
+			<button type="submit" class="btn btn-primary">Ajouter</button>
+		</form>
+
+	</div>
+
+
+	<h4 style="margin-top:40px">Modifier/Supprimer</h4>
+
+	{% for role in allRoles %}
+
+
+		<form method="post">
+			<div class="row ">
+
+				<input name="personnage" class="col-2" value="{{role.get_personnage}}">
+
+				<select name="idFilm" class="col-2">
+					{% for film in allFilms %}
+						{% if film.get_idFilm == role.get_idFilm %}
+							<option value="{{film.get_idFilm}}" selected>{{film.get_titre}}</option>
+						{% else %}
+							<option value="{{film.get_idFilm}}">{{film.get_titre}}</option>
+						{% endif %}
+					{% endfor %}
+
+				</select>
+				<select name="idActeur" class="col-2" value="{{role.get_idActeur}}">
+					{% for acteur in allActeurs %}
+						{% if role.get_idActeur == acteur.get_idActeur %}
+							<option value="{{acteur.get_idActeur}}" selected>{{acteur.get_nom}}
+								{{acteur.get_prenom}}</option>
+						{% else %}
+							<option value="{{acteur.get_idActeur}}">{{acteur.get_nom}}
+								{{acteur.get_prenom}}</option>
+						{% endif %}
+
+
+					{% endfor %}
+				</select>
+
+				<input name="idRole" type="hidden" value="{{role.get_idRole}}">
+
+
+				<input type="hidden" name="type" value="modify">
+				<button type="submit" class="col-1 mx-3">Modifier</button>
+			</form>
+
+			<form method="post" class="col-1">
+				<input type="hidden" name="type" value="delete">
+				<input name="idRole" type="hidden" value="{{role.get_idRole}}">
+				<button type="submit">Supprimer</button>
+			</form>
+
+		</div>
+	{% endfor %}
+
+</div>
+<button style="margin-top:20px">
+	<a href="recherche_film" style="text-decoration: none; color: black;">Revenir à la page recherche</a>
+</button>
