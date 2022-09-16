@@ -1,10 +1,18 @@
 <p>{{status}}</p>
+<<<<<<< HEAD
 <div class="container-fluid" style="background-color: gainsboro; margin-bottom: 20px">
 	<div class="row text-danger">{{error}}</div>
 	<div class="row">
 
 		<form method="post" class="w-50">
 			<h4>Ajouter</h4>
+=======
+<div class="container-fluid bg-light" style="margin-bottom: 20px">
+
+	<div class="row h-75 justify-content-center align-items-center">
+		<h4 class="text-center fw-bold">Ajouter un Acteur</h4>
+		<form action="gestion_acteur" method="post" class="align-items-center w-25">
+>>>>>>> 2d45b60fd22b31df92b567e29bc5a2e78f2a7708
 			<div class="mb-3">
 				<label for="exampleInputEmail1" class="form-label">Nom de l'acteur</label>
 				<input type="text" class="form-control" id="exampleInputEmail1" name="nom">
@@ -19,36 +27,65 @@
 
 	</div>
 
-
-	<h4 style="margin-top:40px">Modifier/Supprimer</h4>
-
-	{% for acteur in allActeurs %}
-
-
-		<form method="post">
-			<div class="row ">
-
-				<input name="nom" class="col-2" value="{{acteur.get_nom}}">
-
-				<input name="prenom" class="col-2" value="{{acteur.get_prenom}}">
-
-				<input name="idActeur" type="hidden" value="{{acteur.get_idActeur}}">
-
-
-				<input type="hidden" name="type" value="modify">
-				<button type="submit" class="col-1 mx-3">Modifier</button>
-			</form>
-
-			<form method="post" class="col-1">
-				<input type="hidden" name="type" value="delete">
-				<input name="idActeur" type="hidden" value="{{acteur.get_idActeur}}">
-				<button type="submit">Supprimer</button>
-			</form>
-
+	<div class="container ">
+		<div class="row">
+			<div class="input-group p-3">
+				<div class="col-4 text-center  fw-bold ">
+					<label for="floatingInput">Nom</label>
+				</div>
+				<div class="col text-center fw-bold ms-3">
+					<label for="floatingInput">Prenom</label>
+				</div>
+				<div class="col-1 text-end fw-bold ">
+					<label for="floatingInput">Action</label>
+				</div>
+			</div>
 		</div>
-	{% endfor %}
+	</div>
 
+	<div class="container" style="padding-bottom:20px">
+		{% for acteur in allActeurs %}
+
+
+			<form method="post">
+				<div class="row">
+
+					<div class="col">
+						<input class="form-control text-center w-75" name="nom" value="{{acteur.get_nom}}">
+					</div>
+
+					<div class="col">
+						<input class="form-control text-center w-75" name="prenom" value="{{acteur.get_prenom}}">
+					</div>
+
+					<input name="idActeur" type="hidden" value="{{acteur.get_idActeur}}">
+
+
+					<input type="hidden" name="type" value="modify">
+
+
+					<div class="col-1">
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</button>
+
+							<ul class="dropdown-menu text-center bg-light" aria-labelledby="dropdownMenuButton1">
+								<li>
+									<button type="submit" class="btn btn-primary mt-2">Modifier</button>
+								</li>
+							</form>
+							<li>
+
+
+								<form method="post">
+									<input type="hidden" name="type" value="delete">
+									<input name="idActeur" type="hidden" value="{{acteur.get_idActeur}}">
+									<button class="btn btn-danger mt-2" type=" submit">Supprimer</button>
+								</form>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
 </div>
-<button style="margin-top:20px">
-	<a href="recherche_film" style="text-decoration: none; color: black;">Revenir à la page recherche</a>
-</button>

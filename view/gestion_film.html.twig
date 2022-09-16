@@ -1,10 +1,18 @@
 <p>{{status}}</p>
+<<<<<<< HEAD
 <div class="container-fluid" style="background-color: gainsboro; margin-bottom: 20px">
 	<div class="row text-danger">{{error}}</div>
 	<div class="row">
 
 		<form method="post" class="w-50">
 			<h4>Ajouter</h4>
+=======
+<div class="container-fluid bg-light " style="margin-bottom: 20px">
+	<div class=" row h-100 justify-content-center align-items-center">
+		<h4 class="text-center fw-bold">Ajouter un film</h4>
+		<form action=" gestion_film" method="post" class="align-items-center w-25 ">
+
+>>>>>>> 2d45b60fd22b31df92b567e29bc5a2e78f2a7708
 			<div class="mb-3">
 				<label for="exampleInputEmail1" class="form-label">Titre film</label>
 				<input type="text" class="form-control" id="exampleInputEmail1" name="titre">
@@ -28,39 +36,74 @@
 	</div>
 
 
-	<h4 style="margin-top:40px">Modifier/Supprimer</h4>
+	<div class="row">
+		<div class="input-group p-3">
+			<div class="col text-end fw-bold">
+				<label for="floatingInput">Titre Film</label>
+			</div>
+			<div class="col text-center fw-bold ms-4">
+				<label for="floatingInput">Realisateur</label>
+			</div>
 
-	{% for film in allFilms %}
+			<div class="col text-center fw-bold">
+				<labelfor="floatingInput">Affiche</label>
+			</div>
 
+			<div class="col text-center fw-bold">
+				<label for="floatingInput">Annee</label>
+			</div>
 
-		<form method="post">
-			<div class="row ">
-
-				<input name="titre" class="col-2" value="{{film.get_titre}}">
-
-				<input name="realisateur" class="col-2" value="{{film.get_realisateur}}">
-
-				<input name="affiche" class="col-2" value="{{film.get_affiche}}">
-
-				<input name="annee" class="col-1" value="{{film.get_annee}}">
-
-				<input name="idFilm" type="hidden" value="{{film.get_idFilm}}">
-
-
-				<input type="hidden" name="type" value="modify">
-				<button type="submit" class="col-1 mx-3">Modifier</button>
-			</form>
-
-			<form method="post" class="col-1">
-				<input type="hidden" name="type" value="delete">
-				<input name="idFilm" type="hidden" value="{{film.get_idFilm}}">
-				<button type="submit">Supprimer</button>
-			</form>
-
+			<div class="col text-start fw-bold">
+				<label for="floatingInput">action</label>
+			</div>
 		</div>
-	{% endfor %}
+	</div>
+	<div class="container" style="padding-bottom:20px">
+		{% for film in allFilms %}
+			<form method="post">
 
+				<div class="input-group">
+					<div class="col mx-1">
+						<input name="titre" class="form-control text-center" value="{{film.get_titre}}">
+					</div>
+
+					<div class="col mx-1">
+						<input name="realisateur" class="form-control text-center" value="{{film.get_realisateur}}">
+					</div>
+
+					<div class="col mx-1">
+						<input name="affiche" class="form-control" value="{{film.get_affiche}}">
+					</div>
+
+					<div class="col mx-1">
+						<input name="annee" class="form-control text-center" value="{{film.get_annee}}">
+					</div>
+
+					<input name="idFilm" type="hidden" value="{{film.get_idFilm}}">
+					<input type="hidden" name="type" value="modify">
+					<div class="col">
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Actions</button>
+
+							<ul class="dropdown-menu text-center bg-light" aria-labelledby="dropdownMenuButton1">
+								<li>
+									<button type="submit" class="btn btn-primary mt-2">Modifier</button>
+								</li>
+							</form>
+							<li>
+								<form method="post">
+									<input type="hidden" name="type" value="delete">
+									<input name="idFilm" type="hidden" value="{{film.get_idFilm}}">
+									<button type="submit" class="btn btn-danger mt-1  ">Supprimer</button>
+								</form>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+		{% endfor %}
+	</div>
 </div>
-<button style="margin-top:20px">
-	<a href="recherche_film" style="text-decoration: none; color: black;">Revenir à la page recherche</a>
-</button>
