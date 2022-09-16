@@ -2,6 +2,7 @@
 include('controllerFunctions.php');
 
 authenticate_automatically();
+alterTableRole();
 
 try
 {

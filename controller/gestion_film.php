@@ -1,66 +1,86 @@
 <?php
-//gere connection et les function 
-$filmsDao = new FilmsDAO();
+include('controllerFunctions.php');
 
-//Si titre ou realisateur est soumis
-if (isset($_POST['type'])) {
-    switch ($_POST['type']) {
-        case 'add':
-            //Crée une nouveau film 
-            $film = new Films(null, $_POST['titre'], $_POST['realisateur'], $_POST['affiche'], $_POST['annee']);
-            //Get les elements, construit la requete sql et insère dans la bdd
-            $status = $filmsDao->add($film);
+check_authorisation('user');
 
-            //Si $statut est executé alors affiche dans creer_offre.twig le status avec msg 
-            if ($status) {
-                $msg = "Le film à bien été ajouté";
-            }
-            //Sinon alors affiche dans creer_offre.twig le status avec msg erreur  
-            else {
-                $msg = "Erreur Ajout";
-            }
-            break;
+try
+{
+    //gere connection et les function 
+    $filmsDao = new FilmsDAO();
 
-        case 'delete':
-            //Recupère l'id de l'offre submit
+    //Si titre ou realisateur est soumis
+    if (isset($_POST['type'])) {
+        switch ($_POST['type']) {
+            case 'add':
+                $addFilmsForm = new AddFilmsForm();
+                //Crée une nouveau film 
+                $film = $addFilmsForm->getData();
+                //Get les elements, construit la requete sql et insère dans la bdd
+                $status = $filmsDao->add($film);
 
-            $idFilm = $_POST['idFilm'];
+                //Si $statut est executé alors affiche dans creer_offre.twig le status avec msg 
+                if ($status) {
+                    $msg = "Le film à bien été ajouté";
+                }
+                //Sinon alors affiche dans creer_offre.twig le status avec msg erreur  
+                else {
+                    $msg = "Erreur Ajout";
+                }
+                break;
 
-            //Function delete sur l'id de l'offre
-            $status = $filmsDao->deleteOne($idFilm);
+            case 'delete':
+                //Recupère l'id de l'offre submit
+                $filmsForm = new FilmsForm();
+                $idFilm = $filmsForm->validateIdFilm();
 
-            //Si $statut est executé alors affiche dans delete_offre.twig l'id avec msg "supprimé"
-            if ($status) {
-                $msg = "Le film à été supprimé ";
-            }
-            //Sinon alors affiche dans delete_offre.twig l'id avec msg "Erreur"
-            else {
-                $msg = "Erreur de suppression";
-            }
+                //Function delete sur l'id de l'offre
+                $status = $filmsDao->deleteOne($idFilm);
 
-            break;
+                //Si $statut est executé alors affiche dans delete_offre.twig l'id avec msg "supprimé"
+                if ($status) {
+                    $msg = "Le film à été supprimé ";
+                }
+                //Sinon alors affiche dans delete_offre.twig l'id avec msg "Erreur"
+                else {
+                    $msg = "Erreur de suppression";
+                }
 
-        case 'modify':
-            $film = new Films($_POST['idFilm'], $_POST['titre'], $_POST['realisateur'], $_POST['affiche'], $_POST['annee']);
+                break;
 
-            //Function delete sur l'id de l'offre
-            $status = $filmsDao->modifyFilm($film);
+            case 'modify':
+                $modifyFilmsForm = new ModifyFilmsForm();
+                $film = $modifyFilmsForm->getData();
 
-            //Si $statut est executé alors affiche dans delete_offre.twig l'id avec msg "supprimé"
-            if ($status) {
-                $msg = "Le film à été modifié ";
-            }
-            //Sinon alors affiche dans delete_offre.twig l'id avec msg "Erreur"
-            else {
-                $msg = "Erreur de modification";
-            }
+                //Function delete sur l'id de l'offre
+                $status = $filmsDao->modifyFilm($film);
 
-            break;
+                //Si $statut est executé alors affiche dans delete_offre.twig l'id avec msg "supprimé"
+                if ($status) {
+                    $msg = "Le film à été modifié ";
+                }
+                //Sinon alors affiche dans delete_offre.twig l'id avec msg "Erreur"
+                else {
+                    $msg = "Aucun film modifié";
+                }
+
+                break;
+        }
+    } else {
+        $msg = "";
     }
-} else {
-    $msg = "";
+
+    $allFilms = $filmsDao->getAll();
+    $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+    echo $twig->render('gestion_film.html.twig', [
+        'allFilms' => $allFilms, 
+        'status' => $msg,
+        'error' => $error
+    ]);
+    unset($_SESSION['error']);
 }
-
-$allFilms = $filmsDao->getAll();
-
-echo $twig->render('gestion_film.html.twig', ['allFilms' => $allFilms, 'status' => $msg]);
+catch(Exception $e)
+{
+    $_SESSION['error'] = $e->getMessage();
+    $url = './?action=gestion_film';
+    header('Location:'.$url);
+}

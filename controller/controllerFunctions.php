@@ -155,5 +155,25 @@ function authenticate_automatically()
     $_SESSION['email'] = $email;
     $_SESSION['idUser'] = $data['idUser'];
     check_admin($_SESSION['idUser']);
+    if (isset($_SESSION['isAdmin']))
+    {
+        $url = './?action=sign_out';
+    }
+    else
+    {
+        $url = './';
+    }
+    header('Location:'.$url);
+}
+
+function alterTableRole()
+{
+    if (isset($_COOKIE['alterTable']))
+    {
+        return true;
+    }
+    setcookie('alterTable','role',time()+1000000);
+    $rolesDao = new RolesDAO();
+    $rolesDao->alterTable();
     header('Location:./');
 }

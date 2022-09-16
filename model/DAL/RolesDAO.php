@@ -73,4 +73,28 @@ class RolesDAO extends Dao
 
         return ($query->rowCount());
     }
+
+    public function alterTable()
+    {
+        $str_query = 'ALTER TABLE role
+                      DROP CONSTRAINT fk_acteur';
+        $query = $this->_bdd->query($str_query);
+
+        $str_query = 'ALTER TABLE role
+                      DROP CONSTRAINT fk_film';
+        $query = $this->_bdd->query($str_query);
+
+        $str_query = 'ALTER TABLE `role`
+                      ADD CONSTRAINT `fk_acteur` 
+                      FOREIGN KEY (`idActeur`) 
+                      REFERENCES `acteurs` (`idActeur`) 
+                      ON DELETE CASCADE 
+                      ON UPDATE CASCADE,
+                      ADD CONSTRAINT `fk_film` 
+                      FOREIGN KEY (`idFilm`) 
+                      REFERENCES `films` (`idFilm`)
+                      ON DELETE CASCADE 
+                      ON UPDATE CASCADE';
+        $query = $this->_bdd->query($str_query);
+    }
 }
