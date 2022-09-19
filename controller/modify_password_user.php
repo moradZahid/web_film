@@ -1,6 +1,7 @@
 <?php
 include('controllerFunctions.php');
 
+// verifie si l'utilisateur est autorisé à executer le script
 check_authorisation();
 
 try

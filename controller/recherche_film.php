@@ -1,7 +1,11 @@
 <?php
 include('controllerFunctions.php');
 
+// gestion de la sauvegarde de la session de l'utilisateur 
 authenticate_automatically();
+
+// modification des contraintes au niveau de la base de donnée 
+// lors de la première connexion au site 
 alterTableRole();
 
 try {
